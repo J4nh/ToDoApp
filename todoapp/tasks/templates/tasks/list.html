@@ -1,0 +1,92 @@
+
+<link rel="stylesheet" 
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+crossorigin="anonymous">
+<style>
+	body{
+		background-color: #494949;
+	}
+	input{
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+	}
+	input::placeholder {
+	  color: #d3d3d3;
+	}
+	.submit{
+		background-color: #6BA3E8;
+	}
+	.center-column{
+		width:600px;
+		margin: 20px auto;
+		padding:20px;
+		background-color: rgb(46, 46, 46);
+		border-radius: 3px;
+		box-shadow: 6px 2px 30px 0px rgba(255, 255, 255, 0.75);
+	}
+	.item-row{
+		background-color: #e93838;
+		margin: 10px;
+		padding: 20px;
+		border-radius: 3px;
+		color: rgb(255, 255, 255);
+		font-size: 16px;
+		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+		text-align: center;
+	}
+	.item-row-completed{
+		background-color: #1ebb38;
+		margin: 10px;
+		padding: 20px;
+		border-radius: 3px;
+		color: rgb(255, 255, 255);
+		font-size: 16px;
+		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+		text-align: center;
+	}
+	.btn-danger{
+		background-color: #ffae19;
+		border-color: #e59400;
+	}
+	.button-right {
+		float: right;
+	}
+</style>
+
+<div class="center-column">
+
+    <form method="POST" action ="/">
+        {% csrf_token %}
+        {{form.title}}
+        <input class="btn btn-info" type="submit" name="Create Task" value="Add task"> 
+    </form>
+
+    <div class="todo-list">
+
+    {%for task in tasks%}
+
+		{% if task.complete == True %}
+        <div class="item-row-completed">
+            <strike>{{task}}</strike>
+			<span class="button-right">
+				<a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+				<a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+			</span>
+        </div>  {% else %} 
+			<div class="item-row">
+            <span>{{task}}</span>
+			<span class="button-right">
+				<a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+				<a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+			</span>
+		</div>
+            {% endif %}
+
+			
+        
+    {%endfor%}
+    </div>
+</div>
