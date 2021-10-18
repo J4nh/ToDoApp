@@ -21,12 +21,12 @@ def index(request):
     return render(request, 'tasks/list.html', context)
 
 def updateTask(request, pk):
-    task = Task.objects.get(id=pk)
+    queryset = Task.objects.get(id=pk)
 
-    form = TaskForm(instance=task)
+    form = UpdateForm(instance=queryset)
 
     if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task)
+        form = UpdateForm(request.POST, instance=queryset)
         if form.is_valid():
             form.save()
             return redirect('/')
